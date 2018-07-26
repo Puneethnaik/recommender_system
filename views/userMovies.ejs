@@ -1,0 +1,25 @@
+<table>
+    <thead>id, title, cast</thead>
+    <tbody>
+        <% for(var i = 0 ; i < movies.length; i++){%>
+            <tr movieID = "<%-movies[i]['id']%>" >
+                
+                <td>
+                    <%-movies[i]['title']%>
+                </td>
+                <td>
+                    <%-movies[i]['cast']%>
+                </td>
+                <td>
+                    <div id = "ratingDiv" movieID = "<%-movies[i]['id']%>" >
+                            <input type="radio" name="rating" value="1"> 1
+                            <input type="radio" name="rating" value="2"> 2
+                            <input type="radio" name="rating" value="3"> 3
+                            <input type="radio" name="rating" value="4"> 4
+                            <input type="radio" name="rating" value="5"> 5
+                    </div>
+                </td>
+            </tr>
+        <%}%>  
+    </tbody>  
+</table>

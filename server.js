@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var login = require('./routes/loginRoutes');
+var login = require('./routes/api/loginAPI');
 var ejs = require('ejs');
 var path = require('path'); 
 var session = require('client-sessions');
@@ -74,7 +74,10 @@ router.post('/login', login.login);
 
 app.use('/api/loginlogout', router);
 
-app.use('/user/', require('./routes/user'));
+app.use('/user', require('./routes/user'));
+
+//recommender system apis
+app.use('/recommender', require('./routes/api/recommenderAPI'))
 
 app.get('/', function(req, res){
     console.log("index page");
