@@ -16,7 +16,7 @@ connection.connect(function(err){
 var login = function(req, res){
     console.log("login callback");
     var email= req.body.email;
-    var password = req.body.password;
+    var password = req.body.passcword;
     connection.query('SELECT * FROM users WHERE email = ?',[email], function (error, results, fields) {
     if (error) {
         // console.log("error ocurred",error);
