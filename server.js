@@ -25,19 +25,19 @@ connection.connect(function(err){
 //
 
 //cron jobs
-new CronJob('00 * * * * *', function() {
+/* new CronJob('00 * * * * *', function() {
      console.log('You will see this message every second');
     // connection.query("delete from Paste where unix_timestamp(now()) - `expiryDuration` * 60 > `timestamp` / 1000", function(err, results, fields){
-    /*     if(!err){
+        if(!err){
             console.log("cron job #1 executed successfully");
         }
         else{
             console.log("contact team! not working");
         }
 
-    }) */
+    }) 
 }, null, true, 'America/Los_Angeles');
-
+ */
 
 var app = express();
 app.use(bodyParser.json());

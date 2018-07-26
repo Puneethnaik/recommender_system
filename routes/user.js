@@ -16,5 +16,9 @@ router.get('/profile', function(req, res){
     res.send("successfully logged in...")
 })
 
+router.post('/rateMovies', function(req, res){
+    console.log(JSON.stringify(req.body));
+    res.send("something should happen here.");
+})
 
 module.exports = router;
