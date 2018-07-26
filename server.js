@@ -62,6 +62,7 @@ app.use(function(req, res, next){
     next();
 });
 
+
 var router = express.Router();
 router.get('/', function(req, res){
     res.json("Welcome to this time_scheduler web app.");
@@ -72,6 +73,8 @@ router.post('/register', login.register);
 router.post('/login', login.login);
 
 app.use('/api/loginlogout', router);
+
+app.use('/user/', require('./routes/user'));
 
 app.get('/', function(req, res){
     console.log("index page");

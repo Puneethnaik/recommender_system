@@ -29,8 +29,8 @@ var login = function(req, res){
         if(results.length >0){
             console.log(results[0].Password + " " + password);
             if(results[0].Password === password){
-            req.session.user = email;
-            res.redirect('/profile');
+            req.session.user = results[0].id;
+            res.redirect('/user/profile');
             /* res.send({
             "code":200,
             "success":"login sucessfull"
