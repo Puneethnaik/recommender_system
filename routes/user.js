@@ -17,7 +17,14 @@ router.get('/profile', function(req, res){
 })
 
 router.post('/rateMovies', function(req, res){
-    console.log(JSON.stringify(req.body));
+    // console.log(JSON.stringify(req.body));
+    ratings = req.body;
+    for(var rating in ratings){
+        if(ratings[rating] != 'NA'){
+            console.log(rating + ratings[rating]); 
+            SQLCalls.addMovieRating(rating.split('_')[1], req.session.user, ratings[rating]);
+        }
+    }
     res.send("something should happen here.");
 })
 
