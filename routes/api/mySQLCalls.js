@@ -26,16 +26,16 @@ function addMovieRating(movieID, userID, rating){
     })
     connection.query(query, function(error, results, fields){
         if(error){
-            console.log(error);
+            // console.log(error);
             return "error"; 
         }
-        console.log(results)
-        if(results.length > 1){
+        // console.log(results + " " + results.length)
+        if(results.length >= 1){
             //the record exists in the database. we should issue update command
             query = "UPDATE ratings SET rating = " + rating + " WHERE movieID = " + movieID + " AND userID = " + userID;
             connection.query(query, function(error, results, fields){
                 if(error){
-                    console.log(error);
+                    // console.log(error);
                     return "error";
                 }
                 console.log("updated successfully");
@@ -46,7 +46,7 @@ function addMovieRating(movieID, userID, rating){
             query = "INSERT INTO ratings(userID, movieID, rating) VALUES(" + userID + ", " + movieID + ", " + rating + ")";
             connection.query(query, function(error, results, fields){
                 if(error){
-                    console.log(error);
+                    // console.log(error);
                     return "error";
                 }
                 console.log("inserted successfully");

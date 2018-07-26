@@ -13,7 +13,7 @@ router.get('/movies', function(req, res){
 })
 router.get('/profile', function(req, res){
     //this will show the default profile of the user
-    res.send("successfully logged in...")
+    res.send("successfully logged in...");
 })
 
 router.post('/rateMovies', function(req, res){
