@@ -30,10 +30,10 @@ for tr in tr_s:
         'imgSrc' : imgsrc['src'].split('/')[-1]
     })
     #also, store the image in the public/images directory
-    """ path = "../public/images/"
+    path = "../public/images/"
     print(imgsrc['src'].split('/')[-1])
     path += imgsrc['src'].split('/')[-1]
-    urllib.request.urlretrieve(imgsrc['src'], path) """
+    urllib.request.urlretrieve(imgsrc['src'], path)
 
 
 
