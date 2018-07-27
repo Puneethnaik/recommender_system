@@ -103,7 +103,7 @@ class Recommender:
 
             user = item[0]
             similarity = item[1]
-            if similarity == 0:
+            if similarity <= 0:
                 continue
             ind = self.user_ids.index(user)
             for it in range(self.movies):
@@ -118,5 +118,5 @@ class Recommender:
 
 
 
-obj = Recommender(4, 1000, 1)
+obj = Recommender(4, 1000, 3)
 print(obj.recommend_movies(50))
