@@ -1,5 +1,6 @@
 const express = require("express");
 const SQLCalls = require('./api/mySQLCalls');
+const recommender = require('./api/recommenderAPI')
 const router = express.Router();
 router.get('/movies', function(req, res){
     //this is the path where all the movies will be displayed and the user will be able to rate them.
@@ -26,6 +27,19 @@ router.post('/rateMovies', function(req, res){
         }
     }
     res.send("something should happen here.");
+})
+
+router.get('/recommendations', function(req, res){
+    //get userID from session variables
+    var userID = req.session.user;
+    console.log("calling function for userId" + userID)
+    var callback = function(recommendations){
+        console.log("for userID" + userID + "the recommendations are " + recommendations)
+        res.json(recommendations);
+    }
+    recommender.getRecommendations(userID, callback);
+
+    
 })
 
 module.exports = router;

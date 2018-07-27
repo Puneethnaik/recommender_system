@@ -8,7 +8,7 @@ class Recommender:
         self.db = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="",
+            password="",
             database="recommender_system"
         )
         self.cursor = self.db.cursor()
@@ -35,13 +35,13 @@ class Recommender:
 
             for result in results:
                 self.matrix[i][result[0]] = result[1]
-            print(results)
+            #print(results)
 
         row_sum = self.matrix.sum(axis=1)
 
-        print(self.user_ids)
-        print(self.mean_rating)
-        print(self.matrix[:, 510:])
+        #print(self.user_ids)
+        #print(self.mean_rating)
+        #print(self.matrix[:, 510:])
 
     def get_similarity(self):
         '''
@@ -79,14 +79,14 @@ class Recommender:
                 if movieA[i] != 0 and movieB[i] != 0:
                     #this means both have watched and rated the movie
                     num += (movieA[i] - mean_ratingA) * (movieB[i] - mean_ratingB)
-            print(np.sqrt(np.sum((rated_moviesA - mean_ratingA) ** 2)))
+            #print(np.sqrt(np.sum((rated_moviesA - mean_ratingA) ** 2)))
             den1 = np.sqrt(np.sum((rated_moviesA - mean_ratingA) ** 2))
             den2 = np.sqrt(np.sum((rated_moviesA - mean_ratingB) ** 2))
             if den1 == 0 or den2 == 0:
                 self.sim[user] = 0
             else:
                 self.sim[user] = num / (den1 * den2)
-        print(self.sim)
+        #print(self.sim)
         return self.sim
     def recommend_movies(self, number_movies):
         '''
@@ -111,12 +111,8 @@ class Recommender:
                     movies_list.append(it)
         #we want a distinct set of movie ids
         movies_list = list(set(movies_list))
+        # print(movies_list)
         if number_movies > len(movies_list):
             return movies_list
         else:
             return movies_list[:number_movies]
-
-
-
-obj = Recommender(4, 1000, 3)
-print(obj.recommend_movies(50))

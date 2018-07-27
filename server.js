@@ -77,7 +77,7 @@ app.use('/api/loginlogout', router);
 app.use('/user', require('./routes/user'));
 
 //recommender system apis
-app.use('/recommender', require('./routes/api/recommenderAPI'))
+// app.use('/recommender', require('./routes/api/recommenderAPI'))
 
 app.get('/', function(req, res){
     console.log("index page");
