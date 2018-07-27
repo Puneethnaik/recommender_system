@@ -35,11 +35,25 @@ router.get('/recommendations', function(req, res){
     console.log("calling function for userId" + userID)
     var callback = function(recommendations){
         console.log("for userID" + userID + "the recommendations are " + recommendations)
-        res.json(recommendations);
+        var movieList = recommendations[0].split(' ')
+        var callback2 = function(movies){
+            console.log("data recieved" + movies);
+            res.render("recommendationsPage.ejs", {movies:movies});
+        }
+        SQLCalls.getRecommendedMovies(movieList, callback2);
+        
     }
     recommender.getRecommendations(userID, callback);
 
     
+})
+
+router.get('/mymovies', function(req, res){
+    //this api renders the movies that the user has rated
+    var callback = function(movies){
+        res.render('myMovies.ejs', {movies : movies});
+    }
+    SQLCalls.getMyMovies(req.session.user, callback);
 })
 
 module.exports = router;
