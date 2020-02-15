@@ -1,18 +1,4 @@
-var mysql  = require('mysql');
-var connection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'',
-    database:'recommender_system'
-})
-
-connection.connect(function(err){
-    if(err){
-        console.log("something wrong. Could not connect with database");
-    }
-    else console.log("mysql successfully connected");
-})
-
+var connection = require('../../mysql-connector-object');
 var login = function(req, res){
     console.log("login callback");
     var email= req.body.email;
@@ -27,8 +13,8 @@ var login = function(req, res){
     }else{
         // console.log('The solution is: ', results);
         if(results.length >0){
-            console.log(results[0].Password + " " + password);
-            if(results[0].Password === password){
+            console.log(results[0].password + " " + password);
+            if(results[0].password === password){
             req.session.user = results[0].id;
             res.redirect('/user/profile');
             /* res.send({
@@ -63,6 +49,7 @@ var register = function(req, res){
         email:email,
         password:password
     }
+    console.log("the connection object is ", connection);
     connection.query("INSERT INTO users SET ?", user, function (error, results, fields) {
         if (error) {
           console.log("error ocurred",error);
@@ -71,7 +58,6 @@ var register = function(req, res){
             "failed":"error ocurred"
           })
         }else{
-          console.log('The solution is: ', results);
           res.send({
             "code":200,
             "success":"user registered sucessfully"

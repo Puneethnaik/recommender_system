@@ -3,10 +3,10 @@ import pySQL
 import urllib.request
 
 
-
+should_scrape = input("Do you want to scrape imdb for images and store them.?")
 #web scraper part
 url = "https://www.imdb.com/chart/top"
-parser = BSWrapper.Parser(url, env = "development")
+parser = BSWrapper.Parser(url, env = "production")
 parser.extract()
 movies = parser.search('table', {'class' : ['chart',  'full-width']})
 tbody = parser.searchChild(movies, "tbody", {'class' : ['lister-list']})
@@ -29,11 +29,17 @@ for tr in tr_s:
         'cast' : target1['title'],
         'imgSrc' : imgsrc['src'].split('/')[-1]
     })
-    #also, store the image in the public/images directory
-    path = "../public/images/"
-    print(imgsrc['src'].split('/')[-1])
-    path += imgsrc['src'].split('/')[-1]
-    urllib.request.urlretrieve(imgsrc['src'], path)
+    if should_scrape.lower() == "yes":
+        #also, store the image in the public/images directory
+        path = "/home/puneeth/Documents/Projects/recommender_system/utilities/public/images/"
+        print(imgsrc['src'].split('/')[-1])
+        path += imgsrc['src'].split('/')[-1]
+        try:
+            urllib.request.urlretrieve(imgsrc['src'], path)
+        except:
+            print("Skipping download")
+    else:
+        print("Not downloading images")
 
 
 
@@ -42,7 +48,7 @@ pySQLObj = pySQL.pySQL()
 pySQLObj.connect({
     'host' : "localhost",
     'user' : "root",
-    "password" : "",
+    "password" : "123",
     "database" : "recommender_system"
 })
 pySQLObj.from_dicts(movies, "movies")

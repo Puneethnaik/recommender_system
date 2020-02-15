@@ -5,7 +5,7 @@ class Parser:
         self.filename = filename
         print("GET " + self.filename)
         if env == 'development':
-            with open('devFile.html') as myfile:
+            with open('utilities/devFile.html') as myfile:
                 self.contents = myfile.read().replace('\n', '')
                 # print("the contents fetched from devFile ", self.contents)
                 # print()

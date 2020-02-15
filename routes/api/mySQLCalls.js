@@ -1,13 +1,6 @@
-const mysql = require('mysql');
-
+require("../../mysql-connector-object");
 
 var getMovies = function(callback){
-    var connection = mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'',
-        database:'recommender_system'
-    })
     connection.query("SELECT * FROM movies", function(error, results, fields){
         if(error){
             return "error"; 
@@ -17,12 +10,7 @@ var getMovies = function(callback){
 }
 
 var getRecommendedMovies = function(movieList, callback){
-    var connection = mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'',
-        database:'recommender_system'
-    })
+    
     console.log(movieList)
     var query = "SELECT * FROM movies WHERE ";
     for(var i = 0 ; i < movieList.length; i++){
@@ -58,12 +46,6 @@ var getRecommendedMovies = function(movieList, callback){
 function getMyMovies(userID, callback){
     //this function returns the list of movie objects that the user has rated
     var query = "SELECT * FROM movies m, ratings r WHERE r.userID = " + userID + " AND m.id = r.movieID";
-    var connection = mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'',
-        database:'recommender_system'
-    })
     connection.query(query, function(error, results, fields){
         if(error){
             // console.log(error);
@@ -77,12 +59,6 @@ function getMyMovies(userID, callback){
 function addMovieRating(movieID, userID, rating){
     //this function inserts/updates movie rating by a user to a movie
     var query = "SELECT * FROM ratings WHERE movieID = " + movieID + " AND userID = " + userID;
-    var connection = mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'',
-        database:'recommender_system'
-    })
     connection.query(query, function(error, results, fields){
         if(error){
             // console.log(error);

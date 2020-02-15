@@ -1,3 +1,4 @@
+var connection = require('./mysql-connector-object');
 var express = require('express');
 var bodyParser = require('body-parser');
 var login = require('./routes/api/loginAPI');
@@ -6,21 +7,9 @@ var path = require('path');
 var session = require('client-sessions');
 var CronJob = require('cron').CronJob;
 
-//mysql 
-var mysql  = require('mysql');
-var connection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'',
-    database:'recommender_system'
-})
 
-connection.connect(function(err){
-    if(err){
-        console.log("something wrong. Could not connect with database");
-    }
-    else console.log("mysql successfully connected");
-})
+
+
 
 //
 
@@ -52,17 +41,17 @@ app.use(session({
 }));
 
 
-
+//set your static folder path.
 app.use(express.static(path.join(__dirname, 'public/')));
 
-
+//CORS
 app.use(function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-
+//---------------Login/Register Routing-------------------------------
 var router = express.Router();
 router.get('/', function(req, res){
     res.json("Welcome to this time_scheduler web app.");
@@ -73,6 +62,7 @@ router.post('/register', login.register);
 router.post('/login', login.login);
 
 app.use('/api/loginlogout', router);
+//---------------------------------------------------------------------
 
 app.use('/user', require('./routes/user'));
 
@@ -81,6 +71,7 @@ app.use('/user', require('./routes/user'));
 
 app.get('/', function(req, res){
     console.log("index page");
+    res.end("Hello");
 });
 
 app.get('/login', function(req, res){
@@ -97,64 +88,12 @@ app.get('/profile', function(req, res){
         res.render('dashboard.ejs', {title:'Dashboard', user : req.session.user});
 });
 
-// app.use('/api/processPaste', require('./routes/processPaste'));
-
-/* app.get('/managePastes', function(req, res){
-    if(!req.session.user)res.redirect('/login');
-    var private_pastes, public_pastes;
-    var Query = "";
-    var userID = req.session.user;
-        if(userID){
-            //return public pastes belonging to the user
-            Query = "select title, body, timestamp from Paste where email = '" + userID + "' and exposure = 'public';";
-        }
-        else{
-            //return public pastes belonging to everyone
-            Query = "select title, body, timestamp from Paste where exposure = 'public';";
-        }
-        console.log("the query is " + Query);
-        var returnSet;
-        connection.query(Query, function(err, results, fields){
-            if(err){
-                console.log("Some error occured");
-            }
-            else {
-                console.log(JSON.stringify(results) + "succ");
-                getPrivateCallback(results, userID);
-            }
-        })
-    var getPrivateCallback = function(resultPublic, userID){
-        connection.query("select title, body, timestamp from Paste where email = '" + userID + "' and exposure = 'private';", function(err, resultPrivate, fields){
-            if(err){
-                console.log("Some error occured");
-                return 'error';
-            }
-            else {
-                res.render('managePastes.ejs', {title:'Manage Pastes', user:req.session.user, public_pastes : resultPublic, private_pastes:resultPrivate});
-
-            }
-        })
-    }
-});
- */
-/* app.get('/explorePastes', function(req, res){
-
-    connection.query("select title, body, timestamp from Paste where exposure = 'public' order by timestamp desc;", function(err, resultPublic, fields){
-        if(err){
-            console.log("Some error occured");
-            return 'error';
-        }
-        else {
-            res.render('explorePastes.ejs', {title:'Explore Pastes', user:req.session.user, public_pastes : resultPublic});
-        }
-    })
-}); */
 
 app.get('/logout', function(req, res){
     req.session.user = undefined;
     res.redirect('/profile');
 })
 app.listen(3000, function(req, res){
-    console.log("We are connected");
+    console.log("Server connected and serving at port 3000");
 });
 
